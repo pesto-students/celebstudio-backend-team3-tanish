@@ -1,4 +1,5 @@
-const express = require('express');
+const express = require('expres');
+require('dotenv').config();
 const CORS = require('cors');
 
 const app = express();
@@ -22,6 +23,6 @@ app.get("/signup", (req,res) => {
 }
 )
 
-app.listen(5050,() => {
+app.listen(process.env.PORT || 5050,() => {
     console.log("server started at 3030");
 })
