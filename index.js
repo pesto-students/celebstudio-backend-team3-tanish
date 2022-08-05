@@ -22,6 +22,6 @@ app.get("/signup", (req,res) => {
 }
 )
 
-app.listen(3030,() => {
+app.listen(5050,() => {
     console.log("server started at 3030");
 })
