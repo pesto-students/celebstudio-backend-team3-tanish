@@ -11,6 +11,11 @@ app.get("/login", (req,res) => {
 }
 )
 
+app.get("/businessLogin", (req,res) => {
+    res.send("business signup page")
+    console.log("business signup page")
+})
+
 app.get("/signup", (req,res) => {
     res.send("request landed at signup endpoint");
     console.log("request landed at signup endpoint");
