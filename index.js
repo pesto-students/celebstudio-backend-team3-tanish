@@ -6,9 +6,10 @@ const app = express();
 
 app.use(CORS());
 
-app.get("/login", (req,res) => {
-    res.send("request landed on login endpoint");
-    console.log("request landed on login endpoint");
+
+app.get("/", (req,res) => {
+    res.send("request home");
+    console.log("request home");
 }
 )
 
@@ -16,6 +17,12 @@ app.get("/businessLogin", (req,res) => {
     res.send("business signup page")
     console.log("business signup page")
 })
+
+app.get("/influencerLogin", (req,res) => {
+    res.send("influencer signup page")
+    console.log("influencer signup page")
+})
+
 
 app.get("/signup", (req,res) => {
     res.send("request landed at signup endpoint");
