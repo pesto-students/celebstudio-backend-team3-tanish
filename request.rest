@@ -1,0 +1,22 @@
+POST http://localhost:8000/login/influencer/
+Content-Type: application/json
+
+{
+    "fname": "jit",
+    "password": "asdfghjk"
+}
+
+##########
+
+POST http://localhost:8000/login/business/
+Content-Type: application/json
+
+{
+    "fname": "wai wai",
+    "password": "qwertasdfghjk"
+}
+
+#############
+
+GET http://localhost:8000/login/influencer/
+ 
