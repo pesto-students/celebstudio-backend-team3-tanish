@@ -1,25 +1,26 @@
 const Influencer = require('./../models/influencer_model');
+const Business= require('./../models/business_model');
 const catchAsync= require('./../utils/catchAsync');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 
 
 
-const signToken = id => {
-    return jwt.sign({ id }, process.env.JWT_SECRET, {
+const signToken = (id, usertype)=> {
+    return jwt.sign({ id,usertype}, process.env.JWT_SECRET, {
       expiresIn: process.env.JWT_EXPIRES_IN
     });
   };
 
-exports.signup  = catchAsync(async( req, res) => { 
-    // const newInfluencer = await Influencer.create({
-    //     name: req.body.name,
-    //     email: req.body.email,
-    //     password: req.body.password,
+exports.signupinfluencer  = catchAsync(async( req, res) => { 
+    const newInfluencer = await Influencer.create({
+        first_name: req.body.fname,
+        last_name: req.body.lname,
+        phone: req.body.cno,
+        email: req.body.email,
+        password: req.body.password,
         
-    //   });
-    console.log(req.body);
-     const newInfluencer = await Influencer.create(req.body)
+      })
    
     res.status(201).json({
         status:'success',
@@ -27,6 +28,26 @@ exports.signup  = catchAsync(async( req, res) => {
             Influencer : newInfluencer
         }
     });
+});
+
+exports.signupbusiness  = catchAsync(async( req, res) => { 
+  const newBusiness = await Business.create({
+      first_name: req.body.fname,
+      last_name: req.body.lname,
+      company_name: req.body.cname,
+      company_url: req.body.curl,
+      email: req.body.email,
+      password: req.body.password,
+      
+    })
+  // const newInfluencer = await Influencer.create(req.body)
+ 
+  res.status(201).json({
+      status:'success',
+      data:{
+          Business : newBusiness,
+      }
+  });
 });
 
 
@@ -41,19 +62,28 @@ exports.login = catchAsync(async( req, res ) => {
           });
         }
         else{
-            const influencer = await Influencer.findOne({email: email}).select('+password');   
+          let user;
+              if(Influencer.exists({email: email})){
+                user = Influencer;
+              }
+            else if (Business.exists({email: email})){
+             
+              user = Business;  
+            }
+            const usertype = await user.findOne({email: email}).select('+password'); 
          
-            if(!influencer || !(await bcrypt.compare(password,influencer.password ))){
+            if(!user || !(await bcrypt.compare(password,usertype.password ))){
             res.status(400).json({
                 status: 'error',
                 message: 'Please enter a valid email and password'
           });
           }  else{
-        const token = signToken(influencer._id);
+        const token = signToken(usertype._id);
+        console.log(usertype._id, usertype.isInfluencer);
         res.status(200).json({
             status:'success',
             token
-        })
+            })
     
     }
 }                     

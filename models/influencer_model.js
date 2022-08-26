@@ -4,9 +4,11 @@ const Campaign = require('./campaign_model');
 const Profile = require('./profile_model');
 const InfluencerSchema = new mongoose.Schema(
     {
-        name: { type: String, required: true },
+        first_name: { type: String, required: true },
+        last_name: { type: String, required: true },
         email: { type: String, unique: true, required: true },
         password: { type: String, required: true , select:false },
+        isInfluencer:{type: Boolean, default: true},
         active: { type: Boolean, required: true, default: false },
         phone: { type: String, required: false },
 

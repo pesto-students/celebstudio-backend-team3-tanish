@@ -3,18 +3,17 @@ const Campaigns = require('./campaign_model');
 const profile = require('./profile_model');
 const BusinessSchema = new mongoose.Schema(
     {
-        name: { type: String, required: true },
+        first_name: { type: String, required: true },
+        last_name: { type: String, required: true },
+        comapny_name: { type: String, required: true },
+        company_url: { type: String, required: true },
         email: { type: String, unique: true, required: true },
-        password: { type: String, required: true },
+        password: { type: String, required: true , select:false },
+        isInfluencer: { type: Boolean, default: false},
         active: { type: Boolean, required: true, default: false },
-        phone: { type: String, required: false },
-
-        campaigns: {
-            type: [Schema.Types.ObjectId],
-            ref: 'Campaign',
-            required: false,
-        },
         
+
+             
     },
     { timestamps: true }
 );

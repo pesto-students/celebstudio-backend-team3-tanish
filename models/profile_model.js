@@ -4,13 +4,13 @@ const Product = require("./product_model");
 const ProfileSchema = new mongoose.Schema({
     followers: { type: Number},
     product_category_1: { 
-        type: [Schema.Types.ObjectId] ,
-        ref: "Product",
+        type: mongoose.Schema.ObjectId ,
+        ref: "Product", required: false
     },
-    product_category_2: {   type:[  Schema.Types.ObjectId] ,
-    ref: "Product",},
+    product_category_2: {   type: mongoose.Schema.ObjectId ,
+    ref: "Product", required: false},
 })
 
-const Profile = mongoose.model('Product', ProfileSchema);
+const Profile = mongoose.model('Profile', ProfileSchema);
 
 module.exports = Profile;
