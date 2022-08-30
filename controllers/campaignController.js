@@ -43,7 +43,7 @@ exports.getAllCampaigns = catchAsync(async (req, res, next) =>{
     res.status(201).json({
         status:'success',
         data:{
-            Campaign: campaigns,
+            campaigns
         }
     });
 
