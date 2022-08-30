@@ -35,3 +35,16 @@ exports.viewCampaign = catchAsync(async (req, res, next) =>{
 exports.deleteCampaign = catchAsync(async (req, res, next) =>{
 
 });
+
+
+exports.getAllCampaigns = catchAsync(async (req, res, next) =>{
+
+    const campaigns = await Campaign.find({});
+    res.status(201).json({
+        status:'success',
+        data:{
+            Campaign: campaigns,
+        }
+    });
+
+}); 
