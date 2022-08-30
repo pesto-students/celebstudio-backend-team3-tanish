@@ -15,7 +15,7 @@ exports.createCampaign = catchAsync(async (req, res, next) => {
         budget:req.body.budget, 
     
         
-        product: req.body.product
+        productId: req.body.productId
     } ); 
     res.status(201).json({
         status:'success',
@@ -35,3 +35,16 @@ exports.viewCampaign = catchAsync(async (req, res, next) =>{
 exports.deleteCampaign = catchAsync(async (req, res, next) =>{
 
 });
+
+
+exports.getAllCampaigns = catchAsync(async (req, res, next) =>{
+
+    const campaigns = await Campaign.find({});
+    res.status(201).json({
+        status:'success',
+        data:{
+            Campaign: campaigns,
+        }
+    });
+
+}); 

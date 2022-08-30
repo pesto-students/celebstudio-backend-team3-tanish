@@ -6,7 +6,7 @@ const catchAsync = require('./../utils/catchAsync');
 
 
 exports.getallCampaigns = catchAsync(async (req, res, next) => {
-    // 1) Get the currently booked tour
+   
 
     const businessuser = Business.findOne({ userid: req.params.userID });
 

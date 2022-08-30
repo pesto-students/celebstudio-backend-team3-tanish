@@ -10,7 +10,7 @@ router.post('/signup/influencer', authController.signupinfluencer);
 router.post('/login', authController.login);
 
 router.post('/newCampaign',campaignController.createCampaign);
-
+router.get('/getAllCampaigns', campaignController.getAllCampaigns);
 
 
 

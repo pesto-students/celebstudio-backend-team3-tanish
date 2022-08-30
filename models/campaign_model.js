@@ -12,16 +12,18 @@ end_date:{type: "date"},
 
 description:{type: "string", required: [true, 'description cannot be empty!']},   
 
-budget:{type: Number}, 
+budget:{type: String, enum: ['0-10,000', '10,000-50000','>50,000'], default: '0-10,000'}, 
 
-status:{type: String, enum: ["pre-launced", 'launced'], default: 'pre-launched'}, 
+status:{type: String, enum: ["pre-launched", 'launced'], default: 'pre-launched'}, 
 
-product:{type:mongoose.Schema.ObjectId, ref:'Product'},
+productId:{type: Number, required: true},
+
+//product:{type:mongoose.Schema.ObjectId, ref:'Product'},
 
 business: {
     type: mongoose.Schema.ObjectId,
     ref: 'Business',
-    required: [true, 'campaign must belong to  a business']
+    required: false
   },
 
 influencer:{
