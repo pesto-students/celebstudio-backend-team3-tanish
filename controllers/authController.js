@@ -79,10 +79,12 @@ exports.login = catchAsync(async( req, res ) => {
           });
           }  else{
         const token = signToken(usertype._id);
+        const user_type = user.isInfluencer ? 'Business' : 'Influencer'; 
         console.log(usertype._id, usertype.isInfluencer);
         res.status(200).json({
             status:'success',
-            token
+            token,
+            user_type: user_type
             })
     
     }
