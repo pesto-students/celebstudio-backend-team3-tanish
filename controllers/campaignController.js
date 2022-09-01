@@ -13,9 +13,10 @@ exports.createCampaign = catchAsync(async (req, res, next) => {
         description:req.body.description,   
         
         budget:req.body.budget, 
-    
+         campaign_objective:req.body.obj,
         
-        product: req.body.product
+        product_category: req.body.pc
+
     } ); 
     res.status(201).json({
         status:'success',

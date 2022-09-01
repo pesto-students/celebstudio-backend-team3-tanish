@@ -14,15 +14,23 @@ description:{type: "string", required: [true, 'description cannot be empty!']},
 
 budget:{type: Number}, 
 
-status:{type: String, enum: ["pre-launced", 'launced'], default: 'pre-launched'}, 
+status:{type: String, enum: ["pre-launched", 'launced'], default: 'pre-launched'}, 
 
-product:{type:mongoose.Schema.ObjectId, ref:'Product'},
+product_category : {type: String, required: [true, 'product_category cannot be empty!']}, 
+
+
+campaign_objective : {type: String, required: true, enum: ["Brand awareness", " Acquiring customers"]},
+
+platform_details:{type: String, required: false, enum: ["facebook", "instagram", "twitter"]},
+
+followers_count:{type: Number, required:false},
+
 
 business: {
     type: mongoose.Schema.ObjectId,
     ref: 'Business',
-    required: [true, 'campaign must belong to  a business']
-  },
+    required: false
+},
 
 influencer:{
     type: mongoose.Schema.ObjectId,

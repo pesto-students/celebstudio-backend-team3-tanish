@@ -9,7 +9,7 @@ const InfluencerSchema = new mongoose.Schema(
         email: { type: String, unique: true, required: true },
         password: { type: String, required: true , select:false },
         isInfluencer:{type: Boolean, default: true},
-        active: { type: Boolean, required: true, default: false },
+        active: { type: Boolean, required: true, default: true },
         phone: { type: String, required: false },
 
         campaigns: {
@@ -17,6 +17,19 @@ const InfluencerSchema = new mongoose.Schema(
             ref: "Campaign",
             required: false,
         },
+
+        profile:{
+            facebook:{ProfileUrl:{type: String, default:''}, FollowerCount:{type: Number,default:''},PostCost:{type: Number,default:''} },
+            twitter:{ProfileUrl:{type: String,default:''}, FollowerCount:{type: Number,default:''},PostCost:{type: Number,default:''}} , 
+            instagram:{ProfileUrl:{type: String,default:''}, FollowerCount:{type: Number,default:''},PostCost:{type: Number,default:''}} },
+            Date_of_Birth: { type: Date,default: Date.now },
+        product_category_1: { 
+            type: String, enum: ["Fashion & Apparel", "Food & Beverages","Health & Wellness"," Pets" ,"Beauty", "Jewellery & Accessories"],required: false
+        },
+        product_category_2: { 
+            type: String, enum: ["Fashion & Apparel", "Food & Beverages","Health & Wellness"," Pets" ,"Beauty", "Jewellery & Accessories"],required: false
+            
+        }
         
     },
     { timestamps: true }
