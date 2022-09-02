@@ -63,23 +63,27 @@ exports.login = catchAsync(async( req, res ) => {
         }
         else{
           let user;
-              if(Influencer.exists({email: email})){
-                user = Influencer;
+         // console.log(await Influencer.exists({email: email}));
+          //console.log(await Business.exists({email: email}));
+              if(await Influencer.exists({email: email})){
+                
+                usertype = await Influencer.findOne({email: email}).select('+password'); 
               }
-            else if (Business.exists({email: email})){
+            else if (await Business.exists({email: email})){
              
-              user = Business;  
+              usertype = await Business.findOne({email: email}).select('+password'); 
             }
-            const usertype = await user.findOne({email: email}).select('+password'); 
+            console.log(usertype);
+            
          
-            if(!user || !(await bcrypt.compare(password,usertype.password ))){
+            if(!usertype || !(await bcrypt.compare(password,usertype.password ))){
             res.status(400).json({
                 status: 'error',
                 message: 'Please enter a valid email and password'
           });
           }  else{
         const token = signToken(usertype._id);
-        const user_type = user.isInfluencer ? 'Business' : 'Influencer'; 
+        const user_type = usertype.isInfluencer ? 'Influencer' : 'Business'; 
         console.log(usertype._id);
         res.status(200).json({
             status:'success',
