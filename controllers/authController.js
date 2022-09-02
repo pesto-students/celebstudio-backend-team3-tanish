@@ -54,6 +54,7 @@ exports.signupbusiness  = catchAsync(async( req, res) => {
 exports.login = catchAsync(async( req, res ) => { 
     const email= req.body.email;
     const password= req.body.password;
+    console.log(email, password);
 //check if email and password are entered
     if(!email || !password) {
         res.status(400).json({
@@ -62,7 +63,7 @@ exports.login = catchAsync(async( req, res ) => {
           });
         }
         else{
-          let user;
+          let usertype;
          // console.log(await Influencer.exists({email: email}));
           //console.log(await Business.exists({email: email}));
               if(await Influencer.exists({email: email})){
