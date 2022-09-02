@@ -6,8 +6,8 @@ const bcrypt = require('bcryptjs');
 
 
 
-const signToken = (id, usertype)=> {
-    return jwt.sign({ id,usertype}, process.env.JWT_SECRET, {
+const signToken = (id)=> {
+    return jwt.sign({ id}, process.env.JWT_SECRET, {
       expiresIn: process.env.JWT_EXPIRES_IN
     });
   };
@@ -80,7 +80,7 @@ exports.login = catchAsync(async( req, res ) => {
           }  else{
         const token = signToken(usertype._id);
         const user_type = user.isInfluencer ? 'Business' : 'Influencer'; 
-        console.log(usertype._id, usertype.isInfluencer);
+        console.log(usertype._id);
         res.status(200).json({
             status:'success',
             token,
