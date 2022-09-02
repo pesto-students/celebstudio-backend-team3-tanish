@@ -24,9 +24,9 @@ exports.signupinfluencer  = catchAsync(async( req, res) => {
    
     res.status(201).json({
         status:'success',
-        data:{
-            Influencer : newInfluencer
-        }
+        // data:{
+        //     Influencer : newInfluencer
+        // }
     });
 });
 
@@ -44,9 +44,9 @@ exports.signupbusiness  = catchAsync(async( req, res) => {
  
   res.status(201).json({
       status:'success',
-      data:{
-          Business : newBusiness,
-      }
+      // data:{
+      //     Business : newBusiness,
+      // }
   });
 });
 
