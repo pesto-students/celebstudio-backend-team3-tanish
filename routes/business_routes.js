@@ -13,7 +13,7 @@ router
 .route('/:id')
 .get(bdashboardController.getProfile)
 .patch(bdashboardController.updateProfile);
-router.get('/:id/dashboard',bdashboardController.getallCampaigns);
+router.get('/:id/campaigns',bdashboardController.getallCampaigns);
 //.post('/update-password',userController.updatePassword)
 
 
