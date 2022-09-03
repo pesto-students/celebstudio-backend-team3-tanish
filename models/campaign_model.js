@@ -1,5 +1,4 @@
 const mongoose = require("mongoose");
-const Product = require('./product_model');
 const Business  = require('./business_model');
 const Influencer = require('./influencer_model');
 
@@ -14,29 +13,23 @@ description:{type: String, required: [true, 'description cannot be empty!']},
 
 budget:{type: Number}, 
 
-status:{type: String, enum: ["pre-launched", 'launched'], default: 'pre-launched'}, 
+status:{type: String, enum: ["pre-launched", 'launched','closed'], default: 'pre-launched'}, 
 
 product_category : {type: Number, required: [true, 'product_category cannot be empty!']}, 
 
 
 campaign_objective : {type: String, required: true},
 
-platform_details:{type: String, required: true, enum: ["facebook", "instagram", "twitter"]},
+platform:{type: String, required: true, enum: ["facebook", "instagram", "twitter"]},
 
 followers_count:{type: Number, required:false},
 
 
-business: {
-    type: mongoose.Schema.ObjectId,
-    ref: 'Business',
-    required: false
-},
+business_id : {type: String, required: false},
 
-influencer:{
-    type: mongoose.Schema.ObjectId,
-    ref: 'Influencer',
-    required: false
-}
+
+
+
 
 });
 

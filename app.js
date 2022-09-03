@@ -16,7 +16,7 @@ app.use(express.urlencoded({ extended: true, limit: '10kb' }));
 //app.use(cookieParser());
 
 
-app.use('/users', userRouter);
+app.use('/api/v1', userRouter);
 
 
 app.get("/",(request,response) => {

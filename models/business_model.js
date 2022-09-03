@@ -1,7 +1,6 @@
 const mongoose = require("mongoose");
 const bcrypt = require('bcryptjs');
 const Campaigns = require('./campaign_model');
-const profile = require('./profile_model');
 const BusinessSchema = new mongoose.Schema(
     {
         first_name: { type: String, required: true },

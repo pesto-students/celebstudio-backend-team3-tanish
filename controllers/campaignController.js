@@ -3,24 +3,8 @@ const catchAsync = require('./../utils/catchAsync');
 
 
 exports.createCampaign = catchAsync(async (req, res, next) => {
-    let obj
-    if(req.body.obj === "acquire") obj= "Acquire Customer"
-    const newCampaign = await Campaign.create({
-        name:req.body.nameCamp, 
-
-        start_date:req.body.start, 
-        
-        end_date:req.body.end, 
-        
-        description:req.body.campDesc,   
-        
-        budget:req.body.budget, 
-        campaign_objective:req.body.campType,
-        platform_details:req.body.platform,
-        followers_count :req.body.fcount,
-        product_category: req.body.prodCatagoryPri
-
-    } ); 
+    
+    const newCampaign = await Campaign.create(req.body); 
     res.status(201).json({
         status:'success',
         data:{
@@ -31,7 +15,8 @@ exports.createCampaign = catchAsync(async (req, res, next) => {
 });
 
 
-exports.viewCampaign = catchAsync(async (req, res, next) =>{
+exports.editCampaign = catchAsync(async (req, res, next) =>{
+    
 
 });
 

@@ -5,7 +5,7 @@ const Influencer = require('./../models/influencer_model');
 
 exports.getProfile = catchAsync(async (req, res, next) => {
 
-influencerId = req.body.id;
+influencerId = req.params.id;
 const influencer = await  Influencer.findById(influencerId);
 const profile_details = {
     first_name : influencer.first_name,
@@ -124,6 +124,18 @@ console.log(update);
 });
 
 
+
 exports.applyforCampaign = catchAsync(async (req, res, next) => {
+
+    campaignId= req.body.campaignId;
+    influencerId = req.params.influencerId;
+    message = req.body.message;
+    const campaign = await Campaign.findById(campaignId);
+    const influencer_applied = await Influencer.findById(influencerId);
+
+
+});
+
+exports.eligible_campaigns = catchAsync(async (req, res, next) => {
 
 });
