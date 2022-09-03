@@ -89,7 +89,8 @@ exports.login = catchAsync(async( req, res ) => {
         res.status(200).json({
             status:'success',
             token,
-            user_type: user_type
+            user_type: user_type,
+            user: usertype
             })
     
     }
