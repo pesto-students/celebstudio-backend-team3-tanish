@@ -1,6 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const userRouter = require('./routes/routes');
+const businessRouter = require('./routes/business_routes');
 
 require('dotenv').config();
 const CORS = require('cors');
@@ -17,6 +18,7 @@ app.use(express.urlencoded({ extended: true, limit: '10kb' }));
 
 
 app.use('/api/v1', userRouter);
+app.use('/api/v1/business', businessRouter);
 
 
 app.get("/",(request,response) => {
