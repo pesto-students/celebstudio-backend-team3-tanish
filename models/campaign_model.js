@@ -2,16 +2,18 @@ const mongoose = require("mongoose");
 const Business  = require('./business_model');
 const Influencer = require('./influencer_model');
 
+
+
 const campaignSchema = new mongoose.Schema({
 name:{type: String, required: [true, 'name cannot be empty!']}, 
 
-start_date:{type: Date}, 
+start_date:{type: Date,required: true}, 
 
-end_date:{type: Date}, 
+end_date:{type: Date,required: true}, 
 
 description:{type: String, required: [true, 'description cannot be empty!']},   
 
-budget:{type: Number}, 
+budget:{type: Number,required: true}, 
 
 status:{type: String, enum: ["pre-launched", 'launched','closed'], default: 'pre-launched'}, 
 
@@ -25,7 +27,13 @@ platform:{type: String, required: true, enum: ["facebook", "instagram", "twitter
 followers_count:{type: Number, required:false},
 
 
-business_id : {type: String, required: false},
+business_id : {type:mongoose.Schema.ObjectId,ref :'Business' ,required: true},
+
+influencer_list:[{
+influencer :{type:mongoose.Schema.ObjectId,ref :'Influencer', required: false},
+}]
+
+
 
 
 

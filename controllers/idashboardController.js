@@ -5,38 +5,15 @@ const Influencer = require('./../models/influencer_model');
 
 exports.getProfile = catchAsync(async (req, res, next) => {
 
-influencerId = req.params.id;
-const influencer = await  Influencer.findById(influencerId);
-const profile_details = {
-    first_name : influencer.first_name,
-    last_name : influencer.last_name,
-    DOB :influencer.Date_of_Birth,
-    email :influencer.email,
-    contact : influencer.phone,
-    facebook :{
-        url : influencer.profile.facebook.ProfileUrl,
-        fcount :influencer.profile.facebook.FollowerCount,
-        cost :influencer.profile.facebook.PostCost
-    },
-    twitter :{
-        url : influencer.profile.twitter.ProfileUrl,
-        fcount :influencer.profile.twitter.FollowerCount,
-        cost :influencer.profile.twitter.PostCost
-    },
-    instagram :{
-        url : influencer.profile.instagram.ProfileUrl,
-        fcount :influencer.profile.instagram.FollowerCount,
-        cost :influencer.profile.instagram.PostCost
-    }
+    influencerId = req.params.id;
+    const influencer = await  Influencer.findById(influencerId);
 
-    
-}
-res.status(201).json({
+    res.status(201).json({
     status:'success',
     data:{
-        profile : profile_details
+        profile : influencer
     }
-});
+    });
 
 });
 
@@ -127,15 +104,46 @@ console.log(update);
 
 exports.applyforCampaign = catchAsync(async (req, res, next) => {
 
-    campaignId= req.body.campaignId;
-    influencerId = req.params.influencerId;
+    campaignId= req.params.id;
+    influencerId = req.body.influencer_id;
     message = req.body.message;
-    const campaign = await Campaign.findById(campaignId);
-    const influencer_applied = await Influencer.findById(influencerId);
+   // const campaign = await Campaign.findById(campaignId);
+    
+   const influencer_applied = await Influencer.findById(influencerId);
+    
+    const filter = {_id: campaignId};
+    const filter1 ={ _id :influencerId ,'campaigns.campaign':campaignId};
+    const update1 ={$addToSet: {
+        campaigns: {message :message, applied:true} // need to add more filters
+    }}
+     const update = {
+        $addToSet: {
+            influencer_list: {influencer: influencerId}
+        }
+    }
+    console.log(update);
+    const campaign = await Campaign.findOneAndUpdate(filter, update, {new: true}, (err) => {
+        if(err){
+            console.log(err)
+        }
+    }) 
+    const influencer = await Influencer.findOneAndUpdate(filter1, update1, {new: true}, (err) => {
+        if(err){
+            console.log(err)
+        }
+    }) 
+    res.status(201).json({
+        status:'success',
+        data:{
+            campaign : campaign,
+            influencer: influencer
+        }
+    });
 
 
 });
 
 exports.eligible_campaigns = catchAsync(async (req, res, next) => {
+
 
 });

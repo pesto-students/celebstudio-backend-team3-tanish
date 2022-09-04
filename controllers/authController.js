@@ -24,9 +24,9 @@ exports.signupinfluencer  = catchAsync(async( req, res) => {
    
     res.status(201).json({
         status:'success',
-        // data:{
-        //     Influencer : newInfluencer
-        // }
+         data:{
+            Influencer : newInfluencer
+         }
     });
 });
 
@@ -44,9 +44,9 @@ exports.signupbusiness  = catchAsync(async( req, res) => {
  
   res.status(201).json({
       status:'success',
-      // data:{
-      //     Business : newBusiness,
-      // }
+      data:{
+           Business : newBusiness,
+       }
   });
 });
 
@@ -63,34 +63,32 @@ exports.login = catchAsync(async( req, res ) => {
           });
         }
         else{
-          let usertype;
-         // console.log(await Influencer.exists({email: email}));
-          //console.log(await Business.exists({email: email}));
+          let user;
               if(await Influencer.exists({email: email})){
                 
-                usertype = await Influencer.findOne({email: email}).select('+password'); 
+                user = await Influencer.findOne({email: email}).select('+password'); 
               }
             else if (await Business.exists({email: email})){
              
-              usertype = await Business.findOne({email: email}).select('+password'); 
+              user = await Business.findOne({email: email}).select('+password'); 
             }
-            console.log(usertype);
+            console.log(user);
             
          
-            if(!usertype || !(await bcrypt.compare(password,usertype.password ))){
+            if(!user || !(await bcrypt.compare(password,user.password ))){
             res.status(400).json({
                 status: 'error',
                 message: 'Please enter a valid email and password'
           });
           }  else{
-        const token = signToken(usertype._id);
-        const user_type = usertype.isInfluencer ? 'Influencer' : 'Business'; 
-        console.log(usertype._id);
+        const token = signToken(user._id);
+        const user_type = user.isInfluencer ? 'Influencer' : 'Business'; 
+        console.log(user._id);
         res.status(200).json({
             status:'success',
             token,
             user_type: user_type,
-            user: usertype
+            user: user
             })
     
     }

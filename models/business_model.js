@@ -11,7 +11,7 @@ const BusinessSchema = new mongoose.Schema(
         password: { type: String, required: true , select:false },
         isInfluencer: { type: Boolean, default: false},
         active: { type: Boolean, required: true, default: true },
-        
+        img :{ type: String, required: false}
 
              
     },

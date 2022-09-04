@@ -2,7 +2,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const userRouter = require('./routes/routes');
 const businessRouter = require('./routes/business_routes');
-
+const campaignRouter = require('./routes/campaign_routes');
 require('dotenv').config();
 const CORS = require('cors');
 
@@ -19,7 +19,7 @@ app.use(express.urlencoded({ extended: true, limit: '10kb' }));
 
 app.use('/api/v1', userRouter);
 app.use('/api/v1/business', businessRouter);
-
+app.use('/api/v1/campaign', campaignRouter);
 
 app.get("/",(request,response) => {
     response.status(200).json({message:"Hello from the server side", app : "celebstudio"});
