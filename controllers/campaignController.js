@@ -88,7 +88,7 @@ exports.campaignView = catchAsync(async (req, res, next) => {
     "/"+(current.getMonth()+1)+
     "/"+current.getFullYear();
     console.log(current_date);
-    
+    console.log(campaign.status);
      if(start_date_==current_date) { campaign.status = "launched"; }
    await campaign.save();  
    // Campaign.find({Posted:{$gt: Date("2012-10-01"), $lt:Date("2012-10-02")}}).where(start_date).equals()

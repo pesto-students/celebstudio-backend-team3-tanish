@@ -31,7 +31,7 @@ influencers:[{
 influencer :{type:mongoose.Schema.ObjectId,ref :'Influencer', required: false},
 message: {type:String, default:''},
 applied: {type:Boolean, required:false},
-status:{type:String, enum: ["accept", 'reject'], default:''},
+status:{type:String, default:''},
 post_link: {type:String, default:''}
 }]
 

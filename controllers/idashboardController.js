@@ -22,7 +22,7 @@ exports.getProfile = catchAsync(async (req, res, next) => {
 
 exports.campaigns = catchAsync(async (req, res, next) => {
     influencerId = req.params.id;
-    const campaigns= await Campaign.find({"influencers.influencer":influencerId,"influencers.status":"accept"}).select('-influencers');
+    const campaigns= await Campaign.find({"influencers.influencer":influencerId,"influencers.status":"accept"}).populate('business_id','company_name').select('-influencers');
     res.status(201).json({
         status:'success',
         data:{
@@ -48,18 +48,19 @@ exports.post_link = catchAsync(async (req, res, next) => {
 
 });
 
-exports.updatePersonalDetails = catchAsync(async (req, res, next) => {
+exports.updateProfile = catchAsync(async (req, res, next) => {
 
-   const influencerId = req.body.id;
+   const influencerId = req.params.id;
     let update = {};
    if (req.body.fname) update.first_name= req.body.fname;
    if (req.body.lname) update.last_name = req.body.lname;
+   if (req.body.email) update.email= req.body.email;
+   if (req.body.contact) update.phone = req.body.contact;
 
     if(req.body.dob) update.Date_of_Birth= req.body.dob;
+  //  if(req.body.facebook) update['facebook.'])
     console.log(update);
-    //if (req.body.facebookurl) update['profile.facebook.ProfileUrl']= req.body.facebookurl;
-
-    console.log(update);
+    
     
     const filter = { _id: influencerId};
     let doc = await Influencer.findOneAndUpdate(filter, update, {
@@ -100,59 +101,12 @@ exports.uploadPhoto= catchAsync(async (req, res, next) => {
 });
 
 
-exports.updateContact = catchAsync(async (req, res, next) => {
-   const influencerId = req.body.id;
-    let update = {};
-   if (req.body.email) update.email= req.body.email;
-   if (req.body.contact) update.phone = req.body.contact;
 
-   const filter = { _id: influencerId};
-    let doc = await Influencer.findOneAndUpdate(filter, update, {
-        new: true
-      });
-      res.status(201).json({
-        status:'success',
-        data:{
-            profile : doc
-        }
-    });
+ 
 
-    
-});
+ 
 
 
-exports.updatePlatformDetails = catchAsync(async (req, res, next) => {
-    const influencerId = req.body.id;
-    let update = {};
-     
-    if (req.body.facebookurl) update['profile.facebook.ProfileUrl']= req.body.facebookurl;
-    if (req.body.facebookFcount) update['profile.facebook.FollowerCount']= req.body.facebookFcount;
-    if (req.body.facebookCost) update['profile.facebook.PostCost']= req.body.facebookCost;
-
-    if (req.body.instagramurl) update['profile.instagram.ProfileUrl']= req.body.instagramurl;
-    if (req.body.instagramFcount) update['profile.instagram.FollowerCount']= req.body.instagramFcount;
-    if (req.body.instagramCost) update['profile.instagram.PostCost']= req.body.instagramCost;
-    
-    if (req.body.twitterurl) update['profile.twitter.ProfileUrl']= req.body.twitterurl;
-    if (req.body.twitterFcount) update['profile.twitter.FollowerCount']= req.body.twitterFcount;
-    if (req.body.twitterCost) update['profile.twitter.PostCost']= req.body.twitterCost;
-console.log(update);
-    const filter = { _id: influencerId};
-    let doc = await Influencer.findOneAndUpdate(filter, update, {
-        new: true
-      });
-      res.status(201).json({
-        status:'success',
-        data:{
-            profile : doc
-        }
-    });
-
-
-
-
-
-});
 
 
 
