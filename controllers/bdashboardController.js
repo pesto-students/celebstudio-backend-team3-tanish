@@ -57,3 +57,21 @@ exports.updateProfile = catchAsync(async (req, res, next) => {
 
 
 });
+
+
+exports.selectInfluencer = catchAsync(async (req, res, next) => {
+   const influencerId = req.body.influencer_id;
+   const  campaignId = req.params.id;
+   const status= req.body.status;
+    const filter = { _id: campaignId,'influencers.influencer':mongoose.Types.ObjectId(influencerId)};
+    const update = {'influencers.$.status':status}
+  // const doc= await Campaign.findOne({ _id: campaignId,'influencers.influencer':influencerId}).exec();
+    let doc = await Campaign.findOneAndUpdate(filter, update, {
+        new: true
+      });
+      res.status(201).json({
+        status:'success',
+        data:doc
+      });
+
+});

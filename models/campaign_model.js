@@ -29,8 +29,12 @@ followers_count:{type: Number, required:false},
 
 business_id : {type:mongoose.Schema.ObjectId,ref :'Business' ,required: true},
 
-influencer_list:[{
+influencers:[{
 influencer :{type:mongoose.Schema.ObjectId,ref :'Influencer', required: false},
+message: {type:String, default:''},
+applied: {type:Boolean, required:false},
+status:{type:String, enum: ["accept", 'reject'], default:''},
+post_link: {type:String, default:''}
 }]
 
 

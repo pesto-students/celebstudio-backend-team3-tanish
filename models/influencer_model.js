@@ -11,23 +11,18 @@ const InfluencerSchema = new mongoose.Schema(
         active: { type: Boolean, required: true, default: true },
         phone: { type: String, required: false },
         Date_of_Birth: { type: Date,default: Date.now },
-        img: { type: String, required: false },
+        img: { data: Buffer, contentType: String},
         
         
-        profile:{
-            facebook:{isactive:{type: Boolean,default: true},profileUrl:{type: String, default:''}, followerCount:{type: Number,default:''},postCost:{type: Number,default:''} },
-            twitter:{isactive:{type: Boolean,default: false},profileUrl:{type: String,default:''}, followerCount:{type: Number,default:''},postCost:{type: Number,default:''}} , 
-            instagram:{isactive:{type: Boolean,default: false},profileUrl:{type: String,default:''}, followerCount:{type: Number,default:''},postCost:{type: Number,default:''}} },
+        
+            facebook:{isactive:{type: Boolean,default: true},url:{type: String, default:''}, follower_count:{type: Number,default:''},cost:{type: Number,default:''} },
+            twitter:{isactive:{type: Boolean,default: false},url:{type: String,default:''}, follower_count:{type: Number,default:''},cost:{type: Number,default:''}} , 
+            instagram:{isactive:{type: Boolean,default: false},url:{type: String,default:''}, follower_count:{type: Number,default:''},cost:{type: Number,default:''}},
             
         
         product_category:{ type: Number, default: 0 },
 
-        campaigns:[{
-        campaign:{type:mongoose.Schema.ObjectId,ref :'Campaign', required: false},
-        message:{type: String, required: false, default: ''},
-        accepted:{type: Boolean, default: false},
-        applied:{type: Boolean, default: false},
-        post_link:{type: String, required: false,default: ''}}]
+        
         
     },
     { timestamps: true }

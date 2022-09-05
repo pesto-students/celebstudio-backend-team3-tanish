@@ -1,6 +1,9 @@
 const Campaign = require('./../models/campaign_model');
 const catchAsync = require('./../utils/catchAsync');
 const Influencer = require('./../models/influencer_model');
+const multer = require('multer');
+const mongoose = require("mongoose");
+
 
 
 exports.getProfile = catchAsync(async (req, res, next) => {
@@ -13,6 +16,34 @@ exports.getProfile = catchAsync(async (req, res, next) => {
     data:{
         profile : influencer
     }
+    });
+
+});
+
+exports.campaigns = catchAsync(async (req, res, next) => {
+    influencerId = req.params.id;
+    const campaigns= await Campaign.find({"influencers.influencer":influencerId,"influencers.status":"accept"}).select('-influencers');
+    res.status(201).json({
+        status:'success',
+        data:{
+             campaigns
+        }
+        });
+});
+
+exports.post_link = catchAsync(async (req, res, next) => { 
+    influencerId = req.body.influencer_id;
+    campaignId = req.params.id;
+    post_link = req.body.post_link;
+    const filter = { _id: campaignId,'influencers.influencer':mongoose.Types.ObjectId(influencerId)};
+    const update = {'influencers.$.post_link':post_link}
+  // const doc= await Campaign.findOne({ _id: campaignId,'influencers.influencer':influencerId}).exec();
+    let doc = await Campaign.findOneAndUpdate(filter, update, {
+        new: true
+      });
+      res.status(201).json({
+        status:'success',
+        data:doc
     });
 
 });
@@ -43,6 +74,29 @@ exports.updatePersonalDetails = catchAsync(async (req, res, next) => {
     
 
     
+});
+
+
+exports.uploadPhoto= catchAsync(async (req, res, next) => {
+
+    
+            const data = req.file.filename;
+            const contentType ='image/png';
+            const filter = { _id: req.params.id};
+            let doc = await Influencer.findOneAndUpdate(filter, {'img.data': data, 'img.contentType': contentType}, {
+                new: true
+              });
+              res.status(201).json({
+                status:'success',
+                data:{
+                    message: "successfully uploaded image",
+                    profile : doc
+                }
+            });
+        
+        
+   
+
 });
 
 
@@ -107,18 +161,12 @@ exports.applyforCampaign = catchAsync(async (req, res, next) => {
     campaignId= req.params.id;
     influencerId = req.body.influencer_id;
     message = req.body.message;
-   // const campaign = await Campaign.findById(campaignId);
     
-   const influencer_applied = await Influencer.findById(influencerId);
     
     const filter = {_id: campaignId};
-    const filter1 ={ _id :influencerId ,'campaigns.campaign':campaignId};
-    const update1 ={$addToSet: {
-        campaigns: {message :message, applied:true} // need to add more filters
-    }}
      const update = {
         $addToSet: {
-            influencer_list: {influencer: influencerId}
+            influencers: {influencer: influencerId, message: message}
         }
     }
     console.log(update);
@@ -127,16 +175,11 @@ exports.applyforCampaign = catchAsync(async (req, res, next) => {
             console.log(err)
         }
     }) 
-    const influencer = await Influencer.findOneAndUpdate(filter1, update1, {new: true}, (err) => {
-        if(err){
-            console.log(err)
-        }
-    }) 
     res.status(201).json({
         status:'success',
         data:{
             campaign : campaign,
-            influencer: influencer
+           
         }
     });
 
@@ -144,6 +187,18 @@ exports.applyforCampaign = catchAsync(async (req, res, next) => {
 });
 
 exports.eligible_campaigns = catchAsync(async (req, res, next) => {
+  const influencerId = req.params.id;
 
+  const influencer = await Influencer.findById(influencerId);
+  if (influencer.facebook.isactive) platform = 'facebook';
+  const campaigns = await Campaign.find().where("platform").equals(platform);
+
+  res.status(201).json({
+    status:'success',
+    data:{
+        campaign : campaigns,
+       
+    }
+});
 
 });

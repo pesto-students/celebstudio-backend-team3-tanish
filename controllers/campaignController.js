@@ -8,7 +8,7 @@ const AppError = require('./../utils/appError');
 exports.createCampaign = catchAsync(async (req, res, next) => {
     
     const newCampaign = await Campaign.create(req.body); 
-    await this.sendEligibleCampaigns(newCampaign._id);
+   // await this.sendEligibleCampaigns(newCampaign._id);
     res.status(201).json({
         status:'success',
         data:{
@@ -43,11 +43,11 @@ exports.editCampaign = catchAsync(async (req, res, next) =>{
 
 
 exports.deleteCampaign = catchAsync(async (req, res, next) =>{
-    const campaign = await Campaign.findByIdAndDelete(req.params.id);
+   const campaign = await Campaign.findByIdAndDelete(req.params.id);
 
-  if (!campaign) {
-    return next(new AppError('No campaign found with that ID', 404));
-  }
+     if (!campaign) {
+      return next(new AppError('No campaign found with that ID', 404));
+     }  
 
   res.status(204).json({
     status: 'success',
@@ -70,57 +70,16 @@ exports.getAllCampaigns = catchAsync(async (req, res, next) =>{
 
 }); 
 
+
 exports.campaignView = catchAsync(async (req, res, next) => {
     campaign_id = req.params.id;
     
     const campaign = await Campaign.findById(campaign_id);
-   
-   console.log(campaign.influencer_list);
-   // const influencers =  await campaign.influencer_list;
-    //console.log(influencers);
-    const doc = await Campaign.findOne({_id:campaign_id}).select("influencer_list");
-    const ids = doc.influencer_list;
-    const records = await Influencer.find().where('_id').in(ids).exec();
-      //console.log(doc);
+     const platform = campaign.platform;
+   const influencers = await Campaign.findOne({_id: campaign_id}).populate({path:'influencers.influencer',select:['first_name', `${platform}`]}).select('influencers').exec();
     res.status(201).json({
         status:'success',
-        data:{
-            records
-        }
+        data:influencers
     });
-
-});
-
-exports.sendEligibleCampaigns = catchAsync(async (campaign_id) =>{
-    const  campaign = await Campaign.findById(campaign_id);
-    const platform = campaign.platform;
-    console.log(platform);
-    let influencers;
-    if (platform=="facebook"){
-         influencers = await Influencer.find({'profile.facebook.isactive':true}).select("_id").exec();
-    }
-   // const ids =influencers;
-    
-    const ids = influencers;
-    let ids2 = ids.map(item => (item._id));
-   console.log(ids2);
-   // console.log(influencers);
-
-   await Influencer.updateMany(
-    {
-        _id:
-            {
-                $in:
-                    
-                        ids2
-
-                    
-            }
-    },
-    {
-        $addToSet: { campaigns:{campaign:campaign_id}  }
-
-    }).exec();
-    
 
 });
