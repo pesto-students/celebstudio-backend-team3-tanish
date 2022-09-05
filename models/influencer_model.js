@@ -13,7 +13,7 @@ const InfluencerSchema = new mongoose.Schema(
         Date_of_Birth: { type: Date,default: Date.now },
         img: { data: Buffer, contentType: String},
 
-        facebook:{isactive:{type: Boolean,default: true},url:{type: String, default:''}, follower_count:{type: Number,default:''},cost:{type: Number,default:''} },
+        facebook:{isactive:{type: Boolean,default: false},url:{type: String, default:''}, follower_count:{type: Number,default:''},cost:{type: Number,default:''} },
         twitter:{isactive:{type: Boolean,default: false},url:{type: String,default:''}, follower_count:{type: Number,default:''},cost:{type: Number,default:''}} , 
         instagram:{isactive:{type: Boolean,default: false},url:{type: String,default:''}, follower_count:{type: Number,default:''},cost:{type: Number,default:''}},
             
