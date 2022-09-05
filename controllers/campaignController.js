@@ -49,7 +49,7 @@ exports.deleteCampaign = catchAsync(async (req, res, next) =>{
      if (!campaign) {
       return next(new AppError('No campaign found with that ID', 404));
      }  
-     runValidators
+     
   res.status(204).json({
     status: 'success',
     data: null
@@ -76,13 +76,28 @@ exports.campaignView = catchAsync(async (req, res, next) => {
     campaign_id = req.params.id;
     
     const campaign = await Campaign.findById(campaign_id);
-  
-    //if(campaign.start_date==) {
+    const start_date = campaign.start_date;
+    const start_date_ =(start_date.getDate()+
+          "/"+(start_date.getMonth()+1)+
+          "/"+start_date.getFullYear()
+          )
+    
+    const current =new Date();
+  console.log(start_date_);
+   const current_date= current.getDate()+
+    "/"+(current.getMonth()+1)+
+    "/"+current.getFullYear();
+    console.log(current_date);
+    
+     if(start_date_==current_date) { campaign.status = "launched"; }
+   await campaign.save();  
+   // Campaign.find({Posted:{$gt: Date("2012-10-01"), $lt:Date("2012-10-02")}}).where(start_date).equals()
      const platform = campaign.platform;
    const influencers = await Campaign.findOne({_id: campaign_id}).populate({path:'influencers.influencer',select:['first_name', `${platform}`]}).select('influencers').exec();
     res.status(201).json({
         status:'success',
-        data:influencers
+        data:influencers,
+        campaign:campaign
     });
 
 });
