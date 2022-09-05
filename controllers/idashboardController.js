@@ -58,8 +58,25 @@ exports.updateProfile = catchAsync(async (req, res, next) => {
    if (req.body.contact) update.phone = req.body.contact;
 
     if(req.body.dob) update.Date_of_Birth= req.body.dob;
-  //  if(req.body.facebook) update['facebook.'])
+    if(req.body.furl) update['facebook.url'] = req.body.furl;
+    if(req.body.furl) update['facebook.isactive'] = true;
+    if(req.body.ffcount) update['facebook.follower_count'] = req.body.ffcount;
+    if(req.body.fcost) update['facebook.cost'] = req.body.fcost;
+
+    if(req.body.iurl) update['instagram.url'] = req.body.iurl;
+    if(req.body.iurl) update['instagram.isactive'] = true;
+    if(req.body.ifcount) update['instagram.follower_count'] = req.body.ifcount;
+    if(req.body.icost) update['instagram.cost'] = req.body.icost;
+
+    if(req.body.turl) update['twitter.url'] = req.body.turl;
+    if(req.body.turl) update['twitter.isactive'] = true;
+    if(req.body.tfcount) update['twitter.follower_count'] = req.body.tfcount;
+    if(req.body.tcost) update['twitter.cost'] = req.body.tcost;
+
+
+
     console.log(update);
+
     
     
     const filter = { _id: influencerId};
