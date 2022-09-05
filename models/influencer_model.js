@@ -12,14 +12,11 @@ const InfluencerSchema = new mongoose.Schema(
         phone: { type: String, required: false },
         Date_of_Birth: { type: Date,default: Date.now },
         img: { data: Buffer, contentType: String},
-        
-        
-        
-            facebook:{isactive:{type: Boolean,default: true},url:{type: String, default:''}, follower_count:{type: Number,default:''},cost:{type: Number,default:''} },
-            twitter:{isactive:{type: Boolean,default: false},url:{type: String,default:''}, follower_count:{type: Number,default:''},cost:{type: Number,default:''}} , 
-            instagram:{isactive:{type: Boolean,default: false},url:{type: String,default:''}, follower_count:{type: Number,default:''},cost:{type: Number,default:''}},
+
+        facebook:{isactive:{type: Boolean,default: true},url:{type: String, default:''}, follower_count:{type: Number,default:''},cost:{type: Number,default:''} },
+        twitter:{isactive:{type: Boolean,default: false},url:{type: String,default:''}, follower_count:{type: Number,default:''},cost:{type: Number,default:''}} , 
+        instagram:{isactive:{type: Boolean,default: false},url:{type: String,default:''}, follower_count:{type: Number,default:''},cost:{type: Number,default:''}},
             
-        
         product_category:{ type: Number, default: 0 },
 
         

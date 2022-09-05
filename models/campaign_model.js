@@ -19,13 +19,11 @@ status:{type: String, enum: ["pre-launched", 'launched','closed'], default: 'pre
 
 product_category : {type: Number, required: [true, 'product_category cannot be empty!']}, 
 
-
 campaign_objective : {type: String, required: true},
 
 platform:{type: String, required: true, enum: ["facebook", "instagram", "twitter"]},
 
 followers_count:{type: Number, required:false},
-
 
 business_id : {type:mongoose.Schema.ObjectId,ref :'Business' ,required: true},
 
@@ -38,12 +36,7 @@ post_link: {type:String, default:''}
 }]
 
 
-
-
-
-
-
-});
+}, { timestamps: true });
 
 const Campaign = mongoose.model('Campaign', campaignSchema);
 

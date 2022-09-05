@@ -6,10 +6,15 @@ const catchAsync = require('./../utils/catchAsync');
 
 // get all campaigns created by the business
 exports.getallCampaigns = catchAsync(async (req, res, next) => {
+    
 
     const campaign_info = await Campaign.find({ business_id: req.params.id}).exec();
 
-    res.status(201).json({
+    if (!campaign_info) {
+        return next(new AppError('No Campaign found with that ID', 404));
+      }
+
+    res.status(200).json({
         status:'success',
         data:{
            campaign_info
