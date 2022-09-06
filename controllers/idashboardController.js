@@ -58,20 +58,24 @@ exports.updateProfile = catchAsync(async (req, res, next) => {
    if (req.body.phone) update.phone = req.body.phone;
 
     if(req.body.Date_of_Birth) update.Date_of_Birth= req.body.Date_of_Birth;
+    if(req.body.facebook){
     if(req.body.facebook.url) update['facebook.url'] = req.body.facebook.url;
     if(req.body.facebook.url) update['facebook.isactive'] = true;
     if(req.body.facebook.follower_count) update['facebook.follower_count'] = req.body.facebook.follower_count;
     if(req.body.facebook.cost) update['facebook.cost'] = req.body.facebook.cost;
-
+    }
+    if(req.body.instagram){
     if(req.body.instagram.url) update['instagram.url'] = req.body.instagram.url;
     if(req.body.instagram.url) update['instagram.isactive'] = true;
     if(req.body.instagram.follower_count) update['instagram.follower_count'] = req.body.instagram.follower_count;
     if(req.body.instagram.cost) update['instagram.cost'] = req.body.instagram.cost;
-
-    if(req.body.twitter.ur) update['twitter.url'] = req.body.twitter.ur;
-    if(req.body.twitter.ur) update['twitter.isactive'] = true;
+    }
+    if(req.body.twitter){
+    if(req.body.twitter.url) update['twitter.url'] = req.body.twitter.url;
+    if(req.body.twitter.url) update['twitter.isactive'] = true;
     if(req.body.twitter.follower_count) update['twitter.follower_count'] = req.body.twitter.follower_count;
     if(req.body.twitter.cost) update['twitter.cost'] = req.body.twitter.cost;
+    }
 
 
 
