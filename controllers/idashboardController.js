@@ -52,26 +52,26 @@ exports.updateProfile = catchAsync(async (req, res, next) => {
 
    const influencerId = req.params.id;
     let update = {};
-   if (req.body.fname) update.first_name= req.body.fname;
-   if (req.body.lname) update.last_name = req.body.lname;
+   if (req.body.first_name) update.first_name= req.body.first_name;
+   if (req.body.last_name) update.last_name = req.body.last_name;
    if (req.body.email) update.email= req.body.email;
-   if (req.body.contact) update.phone = req.body.contact;
+   if (req.body.phone) update.phone = req.body.phone;
 
-    if(req.body.dob) update.Date_of_Birth= req.body.dob;
-    if(req.body.furl) update['facebook.url'] = req.body.furl;
-    if(req.body.furl) update['facebook.isactive'] = true;
-    if(req.body.ffcount) update['facebook.follower_count'] = req.body.ffcount;
-    if(req.body.fcost) update['facebook.cost'] = req.body.fcost;
+    if(req.body.Date_of_Birth) update.Date_of_Birth= req.body.Date_of_Birth;
+    if(req.body.facebook.url) update['facebook.url'] = req.body.facebook.url;
+    if(req.body.facebook.url) update['facebook.isactive'] = true;
+    if(req.body.facebook.follower_count) update['facebook.follower_count'] = req.body.facebook.follower_count;
+    if(req.body.facebook.cost) update['facebook.cost'] = req.body.facebook.cost;
 
-    if(req.body.iurl) update['instagram.url'] = req.body.iurl;
-    if(req.body.iurl) update['instagram.isactive'] = true;
-    if(req.body.ifcount) update['instagram.follower_count'] = req.body.ifcount;
-    if(req.body.icost) update['instagram.cost'] = req.body.icost;
+    if(req.body.instagram.url) update['instagram.url'] = req.body.instagram.url;
+    if(req.body.instagram.url) update['instagram.isactive'] = true;
+    if(req.body.instagram.follower_count) update['instagram.follower_count'] = req.body.instagram.follower_count;
+    if(req.body.instagram.cost) update['instagram.cost'] = req.body.instagram.cost;
 
-    if(req.body.turl) update['twitter.url'] = req.body.turl;
-    if(req.body.turl) update['twitter.isactive'] = true;
-    if(req.body.tfcount) update['twitter.follower_count'] = req.body.tfcount;
-    if(req.body.tcost) update['twitter.cost'] = req.body.tcost;
+    if(req.body.twitter.ur) update['twitter.url'] = req.body.twitter.ur;
+    if(req.body.twitter.ur) update['twitter.isactive'] = true;
+    if(req.body.twitter.follower_count) update['twitter.follower_count'] = req.body.twitter.follower_count;
+    if(req.body.twitter.cost) update['twitter.cost'] = req.body.twitter.cost;
 
 
 
