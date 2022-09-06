@@ -22,7 +22,10 @@ exports.getProfile = catchAsync(async (req, res, next) => {
 
 exports.campaigns = catchAsync(async (req, res, next) => {
     influencerId = req.params.id;
-    const campaigns= await Campaign.find({"influencers.influencer":influencerId,"influencers.status":"accept"}).populate('business_id','company_name').select('-influencers');
+    const accept = "accept";
+    const campaigns= await Campaign.find({'influencers.influencer':influencerId})
+    .populate('business_id','company_name');
+    //.populate('influencers','influencer.$.post_link');
     res.status(201).json({
         status:'success',
         data:{
@@ -32,10 +35,10 @@ exports.campaigns = catchAsync(async (req, res, next) => {
 });
 
 exports.post_link = catchAsync(async (req, res, next) => { 
-    influencerId = req.body.influencer_id;
-    campaignId = req.params.id;
+    influencerId = req.params.id;
+    campaignId = req.body.campaign_id;
     post_link = req.body.post_link;
-    const filter = { _id: campaignId,'influencers.influencer':mongoose.Types.ObjectId(influencerId)};
+    const filter = { _id: campaignId,'influencers.influencer':influencerId};
     const update = {'influencers.$.post_link':post_link}
   // const doc= await Campaign.findOne({ _id: campaignId,'influencers.influencer':influencerId}).exec();
     let doc = await Campaign.findOneAndUpdate(filter, update, {
@@ -181,7 +184,7 @@ exports.eligible_campaigns = catchAsync(async (req, res, next) => {
   const campaigns = await Campaign.find()
   .where("platform").equals(platform)
   .where("product_category").equals(product_category)
-  .where("budget").lt(cost).gt(0.8*cost);
+  .where("budget").lte(cost).gt(0.8*cost);
 
 // const campaigns = await Campaign.find()
 //   .where("platform").equals(platform)
