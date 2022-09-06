@@ -19,6 +19,12 @@ const InfluencerSchema = new mongoose.Schema(
             
         product_category:{ type: Number, default: 0 },
 
+        campaigns:[{
+            campaign: { type: mongoose.Schema.ObjectId, ref:'Campaign' },
+            post_link:{type: String,default: ''},
+        }
+        ]
+
         
         
     },
@@ -37,6 +43,12 @@ InfluencerSchema.methods.isValidPassword = async function (password) {
     const compare = await bcrypt.compare(password, user.password);
     return compare;
 };
+InfluencerSchema.methods.correctPassword = async function(
+    candidatePassword,
+    userPassword
+  ) {
+    return await bcrypt.compare(candidatePassword, userPassword);
+  };
 
 
 const Influencer = mongoose.model('Influencer', InfluencerSchema);

@@ -11,7 +11,7 @@ router.post('/:id/apply', idashboardController.applyforCampaign);
 router.patch('/:id/apply', idashboardController.applyforCampaign);
 router.get('/:id/influencer-list', campaignController.campaignView);
 router.post('/:id/select-influencer', bdashboardController.selectInfluencer);
-router.post('/:id/post-link', idashboardController.post_link)
+
 router
   .route('/:id')
   .patch(campaignController.editCampaign)

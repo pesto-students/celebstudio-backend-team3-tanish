@@ -10,7 +10,7 @@ const router = express.Router();
 
 
 router
-.route('/:id')
+.route('/')
 .get(bdashboardController.getProfile)
 .patch(bdashboardController.updateProfile);
 router.get('/:id/campaigns',bdashboardController.getallCampaigns);

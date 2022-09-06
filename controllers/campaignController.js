@@ -8,7 +8,6 @@ const AppError = require('./../utils/appError');
 exports.createCampaign = catchAsync(async (req, res, next) => {
     
     const newCampaign = await Campaign.create(req.body); 
-   // await this.sendEligibleCampaigns(newCampaign._id);
     res.status(201).json({
         status:'success',
         data:{
@@ -20,16 +19,10 @@ exports.createCampaign = catchAsync(async (req, res, next) => {
 
 
 exports.editCampaign = catchAsync(async (req, res, next) =>{
+
     const campaign_id = req.params.id;
-    let update = {};
-   if (req.body.start_date) update.start_date= req.body.start_date;
-   if (req.body.end_date) update.end_date = req.body.end_date;
-   if (req.body.name) update.name = req.body.name;
-   if (req.body.description) update.description = req.body.description;
-   if (req.body.campaign_objective) update.campaign_objective = req.body.campaign_objective;
-   console.log(update);
-   const filter = { _id: campaign_id};
-    let doc = await Campaign.findOneAndUpdate(filter, update, {
+    const filter = { _id: campaign_id};
+    let doc = await Campaign.findOneAndUpdate(filter, req.body, {
         new: true
       });
       res.status(200).json({
@@ -91,13 +84,12 @@ exports.campaignView = catchAsync(async (req, res, next) => {
     console.log(campaign.status);
      if(start_date_==current_date) { campaign.status = "launched"; }
    await campaign.save();  
-   // Campaign.find({Posted:{$gt: Date("2012-10-01"), $lt:Date("2012-10-02")}}).where(start_date).equals()
      const platform = campaign.platform;
    const influencers = await Campaign.findOne({_id: campaign_id}).populate({path:'influencers.influencer',select:['first_name', `${platform}`]}).select('influencers').exec();
     res.status(201).json({
         status:'success',
         data:influencers,
-        campaign:campaign
+        
     });
 
 });
