@@ -56,6 +56,7 @@ exports.updateProfile = catchAsync(async (req, res, next) => {
    if (req.body.last_name) update.last_name = req.body.last_name;
    if (req.body.email) update.email= req.body.email;
    if (req.body.phone) update.phone = req.body.phone;
+   if(req.body.product_category) update.product_category= req.body.product_category;
 
     if(req.body.Date_of_Birth) update.Date_of_Birth= req.body.Date_of_Birth;
     if(req.body.facebook){
@@ -165,8 +166,26 @@ exports.eligible_campaigns = catchAsync(async (req, res, next) => {
   const influencerId = req.params.id;
 
   const influencer = await Influencer.findById(influencerId);
-  if (influencer.facebook.isactive) platform = 'facebook';
-  const campaigns = await Campaign.find().where("platform").equals(platform);
+  const product_category = influencer.product_category;
+  if (influencer.facebook.isactive) 
+  {platform = 'facebook';
+  cost = influencer.facebook.cost;}
+  if (influencer.instagram.isactive){
+     platform = 'instagram';
+     cost = influencer.instagram.cost;
+     }
+  if (influencer.instagram.isactive) {
+    platform = 'twitter';
+    cost = influencer.twitter.cost;
+  }
+  const campaigns = await Campaign.find()
+  .where("platform").equals(platform)
+  .where("product_category").equals(product_category)
+  .where("budget").lt(cost).gt(0.8*cost);
+
+// const campaigns = await Campaign.find()
+//   .where("platform").equals(platform)
+//   .where("product_category").equals(product_category);
 
   res.status(201).json({
     status:'success',
