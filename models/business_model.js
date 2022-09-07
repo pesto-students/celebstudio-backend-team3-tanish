@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 const bcrypt = require('bcryptjs');
 const Campaigns = require('./campaign_model');
+
 const BusinessSchema = new mongoose.Schema(
     {
         first_name: { type: String, required: true },
@@ -19,6 +20,7 @@ const BusinessSchema = new mongoose.Schema(
 );
 
 
+
 BusinessSchema.pre("save", async function (next) {
     const hash = await bcrypt.hash(this.password, 10);
     this.password = hash;
@@ -29,6 +31,14 @@ BusinessSchema.methods.isValidPassword = async function (password) {
     const compare = await bcrypt.compare(password, user.password);
     return compare;
 };
+BusinessSchema.methods.correctPassword = async function(
+    candidatePassword,
+    userPassword
+  ) {
+    return await bcrypt.compare(candidatePassword, userPassword);
+  };
+
+
 
 const Business = mongoose.model('Business', BusinessSchema);
 

@@ -22,7 +22,8 @@ const upload = multer({
  router.get('/:id/campaigns', idashboardController.campaigns);
  router.get('/:id/eligible-campaigns', idashboardController.eligible_campaigns);
  router.patch('/:id', idashboardController.updateProfile);
- router.post('/:id/post-link', idashboardController.post_link)
+ router.post('/:id/post-link', idashboardController.post_link);
+ router.patch('/:id/change-password', authController.updatePasswordInfluencer);
  
 
 

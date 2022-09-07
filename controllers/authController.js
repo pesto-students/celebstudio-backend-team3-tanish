@@ -41,8 +41,6 @@ exports.signupbusiness  = catchAsync(async( req, res) => {
       password: req.body.password,
       
     })
-  // const newInfluencer = await Influencer.create(req.body)
- 
   res.status(201).json({
       status:'success',
       data:{
@@ -97,9 +95,32 @@ exports.login = catchAsync(async( req, res ) => {
 
 });
 
-exports.updatePassword = catchAsync(async (req, res, next) => {
+exports.updatePasswordInfluencer = catchAsync(async (req, res, next) => {
   // 1) Get user from collection
-  const user = await Campaign.findById(req.params.id).select('+password');
+  const user = await Influencer.findById(req.params.id).select('+password');
+
+  // 2) Check if POSTed current password is correct
+  if (!(await user.correctPassword(req.body.passwordCurrent, user.password))) {
+    return next(new AppError('Your current password is wrong.', 401));
+  }
+
+  // 3) If so, update password
+  user.password = req.body.password;
+  user.passwordConfirm = req.body.passwordConfirm;
+  await user.save();
+  // User.findByIdAndUpdate will NOT work as intended!
+  const token = signToken(user._id);
+  // 4) Log user in, send JWT
+  res.status(200).json({
+    status:'success',
+    token
+    })
+
+});
+
+exports.updatePasswordBusiness = catchAsync(async (req, res, next) => {
+  // 1) Get user from collection
+  const user = await Business.findById(req.params.id).select('+password');
 
   // 2) Check if POSTed current password is correct
   if (!(await user.correctPassword(req.body.passwordCurrent, user.password))) {

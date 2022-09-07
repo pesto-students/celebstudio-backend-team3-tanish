@@ -14,6 +14,7 @@ router
 .get(bdashboardController.getProfile)
 .patch(bdashboardController.updateProfile);
 router.get('/:id/campaigns',bdashboardController.getallCampaigns);
+router.patch('/:id/change-password', authController.updatePasswordBusiness);
 //.post('/update-password',userController.updatePassword)
 
 

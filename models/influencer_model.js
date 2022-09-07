@@ -19,12 +19,7 @@ const InfluencerSchema = new mongoose.Schema(
             
         product_category:{ type: Number, default: 0 },
 
-        campaigns:[{
-            campaign: { type: mongoose.Schema.ObjectId, ref:'Campaign' },
-            post_link:{type: String,default: ''},
-        }
-        ]
-
+       
         
         
     },
