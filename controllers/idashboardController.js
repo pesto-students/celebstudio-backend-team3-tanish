@@ -142,7 +142,10 @@ exports.eligible_campaigns = catchAsync(async (req, res, next) => {
   const influencer = await Influencer.findById(influencerId);
   const product_category = influencer.product_category;
  
-  let all_campaigns = Array();
+  let all_campaigns = {};
+  let campaignsf;
+  let campaignsi;
+  let campaignst;
   if (influencer.facebook.isactive) 
   {platform = "facebook";
   cost = influencer.facebook.cost;
@@ -150,7 +153,7 @@ exports.eligible_campaigns = catchAsync(async (req, res, next) => {
   .where("platform").equals(platform)
   .where("product_category").equals(product_category)
   .where("budget").lte(cost).gt(0.8*cost);
-  all_campaigns.push(campaigns);
+  all_campaigns =campaigns;
 }
   if (influencer.instagram.isactive){
      platform="twitter";
@@ -159,7 +162,7 @@ exports.eligible_campaigns = catchAsync(async (req, res, next) => {
   .where("platform").equals(platform)
   .where("product_category").equals(product_category)
   .where("budget").lte(cost).gt(0.8*cost);
-  all_campaigns.push(campaigns2);
+  all_campaigns.concat(campaigns2);
      }
   if (influencer.instagram.isactive) {
     platform="instagram";
@@ -168,7 +171,7 @@ exports.eligible_campaigns = catchAsync(async (req, res, next) => {
     .where("platform").equals(platform)
   .where("product_category").equals(product_category)
   .where("budget").lte(cost).gt(0.8*cost);
-  all_campaigns.push(campaigns3);
+  all_campaigns.concat(campaigns3);
   }
   
 
@@ -176,7 +179,7 @@ exports.eligible_campaigns = catchAsync(async (req, res, next) => {
   res.status(201).json({
     status:'success',
     data:{
-        campaign : all_campaigns,
+        campaign : all_campaigns
        
     }
 });
