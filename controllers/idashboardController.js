@@ -142,37 +142,43 @@ exports.eligible_campaigns = catchAsync(async (req, res, next) => {
   const influencer = await Influencer.findById(influencerId);
   const product_category = influencer.product_category;
  
-  let all_campaigns = {};
-  let campaignsf;
-  let campaignsi;
-  let campaignst;
+  let all_campaigns = Array();
+  
   if (influencer.facebook.isactive) 
   {platform = "facebook";
   cost = influencer.facebook.cost;
   const campaigns = await Campaign.find()
   .where("platform").equals(platform)
   .where("product_category").equals(product_category)
-  .where("budget").lte(cost).gt(0.8*cost);
+  //.where("budget").lte(cost).gt(0.8*cost);
   all_campaigns =campaigns;
+  console.log(all_campaigns);
+  console.log(campaigns);
 }
-  if (influencer.instagram.isactive){
+  if (influencer.twitter.isactive){
      platform="twitter";
-     cost = influencer.instagram.cost;
+     cost = influencer.twitter.cost;
      const campaigns2 = await Campaign.find()
   .where("platform").equals(platform)
   .where("product_category").equals(product_category)
-  .where("budget").lte(cost).gt(0.8*cost);
-  all_campaigns.concat(campaigns2);
-     }
+  //.where("budget").lte(cost).gt(0.8*cost);
+  all_campaigns= all_campaigns.concat(campaigns2);
+  console.log(all_campaigns);
+  console.log(campaigns2);
+}
+     
   if (influencer.instagram.isactive) {
     platform="instagram";
     cost = influencer.twitter.cost;
     const campaigns3 = await Campaign.find()
     .where("platform").equals(platform)
   .where("product_category").equals(product_category)
-  .where("budget").lte(cost).gt(0.8*cost);
-  all_campaigns.concat(campaigns3);
-  }
+  //.where("budget").lte(cost);
+  all_campaigns= all_campaigns.concat(campaigns3);
+  console.log(all_campaigns);
+  console.log(campaigns3);
+}
+  
   
 
 
