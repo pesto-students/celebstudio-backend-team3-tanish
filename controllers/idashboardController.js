@@ -129,10 +129,7 @@ exports.applyforCampaign = catchAsync(async (req, res, next) => {
     console.log(influencer);
     res.status(201).json({
         status:'success',
-        data:{
-            influencer: influencer
-           
-        }
+        data:influencer
     });
 
 
