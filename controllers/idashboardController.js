@@ -112,11 +112,11 @@ exports.applyforCampaign = catchAsync(async (req, res, next) => {
     influencerId = req.body.influencer_id;
     message = req.body.message;
     
-    
+   
     const filter = {_id: campaignId};
      const update = {
         $addToSet: {
-            influencers: {influencer: influencerId, message: message}
+            influencers: {influencer: influencerId, message: message, applied:false}
         }
     }
     console.log(update);
@@ -132,6 +132,7 @@ exports.applyforCampaign = catchAsync(async (req, res, next) => {
            
         }
     });
+
 
 
 });

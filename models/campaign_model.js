@@ -30,7 +30,7 @@ business_id : {type:mongoose.Schema.ObjectId,ref :'Business' ,required: true},
 influencers:[{
 influencer :{type:mongoose.Schema.ObjectId,ref :'Influencer', required: false},
 message: {type:String, default:''},
-applied: {type:Boolean, required:false},
+applied: {type:Boolean, default:false},
 status:{type:String, default:''},
 post_link: {type:String, default:''},
 cost:{type:Number, default:0}
