@@ -1,6 +1,7 @@
 const { request } = require('express');
 const Campaign = require('./../models/campaign_model');
 const Business = require('./../models/business_model');
+const Influencer = require('./../models/influencer_model');
 const catchAsync = require('./../utils/catchAsync');
 
 
@@ -60,11 +61,20 @@ exports.selectInfluencer = catchAsync(async (req, res, next) => {
    const  campaignId = req.params.id;
    const status= req.body.status;
    const cost = req.body.cost;
-   const influencer = await  Influencer.findById(influencerId);
+      
+   const influencer = await  Influencer.findById(influencerId).select('+password');
+
+   
    const earning = influencer.metrics.earning;
-   influencer.metrics.earning= cost+earning;
-   influencer.metrics.collabs.push(campaignId);
-   person.save(done);
+  
+   influencer.metrics.earning= parseInt(cost)+earning;
+  
+   const collabs = influencer.metrics.collabs
+   
+   collabs.push(String(campaignId));
+   
+   influencer.metrics.collabs = collabs;
+  
    await influencer.save();
 
 
@@ -77,6 +87,7 @@ exports.selectInfluencer = catchAsync(async (req, res, next) => {
       res.status(201).json({
         status:'success',
         data:doc
+       
       });
 
 });
