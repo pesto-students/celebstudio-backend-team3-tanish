@@ -185,3 +185,17 @@ exports.eligible_campaigns = catchAsync(async (req, res, next) => {
 });
 
 });
+
+
+exports.applied_campaigns = catchAsync(async (req, res, next) => { 
+    influencerId = req.params.id;
+    const accept = "accept";
+    const campaigns = await Campaign.find({"influencers":{$elemMatch:{'applied':true,'influencer':influencerId}}})
+    .populate('business_id','company_name') ;
+    res.status(201).json({
+        status:'success',
+        data:{
+             campaigns
+        }
+        });
+ });
