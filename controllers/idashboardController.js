@@ -149,7 +149,7 @@ exports.eligible_campaigns = catchAsync(async (req, res, next) => {
   cost = influencer.facebook.cost;
   const campaigns = await Campaign.find()
   .where("platform").equals(platform)
-  .where("product_category").equals(product_category)
+  .where("product_category").equals(product_category).where("influencers.influencer").ne(influencerId)
   //.where("budget").lte(cost).gt(0.8*cost);
   all_campaigns =campaigns;
 }
@@ -158,7 +158,7 @@ exports.eligible_campaigns = catchAsync(async (req, res, next) => {
      cost = influencer.twitter.cost;
      const campaigns2 = await Campaign.find()
   .where("platform").equals(platform)
-  .where("product_category").equals(product_category)
+  .where("product_category").equals(product_category).where("influencers.influencer").ne(influencerId)
   //.where("budget").lte(cost).gt(0.8*cost);
   all_campaigns= all_campaigns.concat(campaigns2);
 }
@@ -168,7 +168,7 @@ exports.eligible_campaigns = catchAsync(async (req, res, next) => {
     cost = influencer.twitter.cost;
     const campaigns3 = await Campaign.find()
     .where("platform").equals(platform)
-    .where("product_category").equals(product_category)
+    .where("product_category").equals(product_category).where("influencers.influencer").ne(influencerId)
   //.where("budget").lte(cost);
   all_campaigns= all_campaigns.concat(campaigns3);
 }
