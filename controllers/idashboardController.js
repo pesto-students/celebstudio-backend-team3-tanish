@@ -41,6 +41,23 @@ exports.updateProfile = catchAsync(async (req, res, next) => {
 exports.campaigns = catchAsync(async (req, res, next) => {
 
     influencerId = req.params.id;
+    const influencer = await  Influencer.findById(influencerId);
+    let platform =0;
+    if(influencer.facebook.isactive) platform = platform+1;
+    if(influencer.instagram.isactive) platform= platform+1;
+    if(influencer.twitter.isactive) platform = platform+1;
+    let collabs = influencer.metrics.collabs;
+    const unique = (value, index, self) => {
+        return self.indexOf(value) === index
+      }
+      
+      const uniquebs = collabs.filter(unique)
+      
+    collabs = uniquebs.length;
+    const post_share = influencer.metrics.post_share;
+    const earnings = influencer.metrics.earnings;
+
+
     const accept = "accept";
     const campaigns = await Campaign.find({"influencers":{$elemMatch:{'status':accept,'influencer':influencerId}}},{"influencers.$":1})
     .populate('business_id','company_name')
@@ -49,15 +66,24 @@ exports.campaigns = catchAsync(async (req, res, next) => {
     res.status(201).json({
         status:'success',
         data:{
-             campaigns
+             campaigns,
+             platform,
+             post_share,
+             collabs,
+             earnings
         }
         });
+
 });
 
 exports.post_link = catchAsync(async (req, res, next) => { 
     influencerId = req.params.id;
     campaignId = req.body.campaign_id;
     post_link = req.body.post_link;
+    const influencer = await  Influencer.findById(influencerId);
+    const post_share = influencer.metrics.post_share;
+    influencer.metrics.post_share= cost+post_share;
+    await influencer.save();
     const filter = { _id: campaignId,'influencers.influencer':influencerId};
     const update = {'influencers.$.post_link':post_link}
   

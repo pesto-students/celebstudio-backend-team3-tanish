@@ -9,11 +9,9 @@ exports.getallCampaigns = catchAsync(async (req, res, next) => {
     
 
     const campaign_info = await Campaign.find({ business_id: req.params.id}).exec();
-
     if (!campaign_info) {
         return next(new AppError('No Campaign found with that ID', 404));
       }
-
     res.status(200).json({
         status:'success',
         data:{
@@ -62,6 +60,14 @@ exports.selectInfluencer = catchAsync(async (req, res, next) => {
    const  campaignId = req.params.id;
    const status= req.body.status;
    const cost = req.body.cost;
+   const influencer = await  Influencer.findById(influencerId);
+   const earning = influencer.metrics.earning;
+   influencer.metrics.earning= cost+earning;
+   influencer.metrics.collabs.push(campaignId);
+   person.save(done);
+   await influencer.save();
+
+
 
     const filter = { _id: campaignId,'influencers.influencer':influencerId};
     const update = {'influencers.$.status':status,'influencers.$.cost': cost}

@@ -29,12 +29,6 @@ const upload = multer({
 
 
 
-// router
-// .route('/:id')
-// .get(bdashboardController.getProfile)
-// .patch(bdashboardController.updateProfile);
-//router.post('/:id/uploadPhoto',upload.single('testImage'),idashboardController.uploadPhoto);
-//.post('/update-password',userController.updatePassword)
 
 
 module.exports = router;

@@ -64,16 +64,11 @@ exports.login = catchAsync(async( req, res ) => {
         else{
           let user;
               if(await Influencer.exists({email: email})){
-                
-                user = await Influencer.findOne({email: email}).select('+password'); 
+              user = await Influencer.findOne({email: email}).select('+password'); 
               }
-            else if (await Business.exists({email: email})){
-             
+            else if (await Business.exists({email: email})){            
               user = await Business.findOne({email: email}).select('+password'); 
-            }
-            console.log(user);
-            
-         
+            }         
             if(!user || !(await bcrypt.compare(password,user.password ))){
             res.status(400).json({
                 status: 'error',
@@ -108,7 +103,6 @@ exports.updatePasswordInfluencer = catchAsync(async (req, res, next) => {
   user.password = req.body.password;
   user.passwordConfirm = req.body.passwordConfirm;
   await user.save();
-  // User.findByIdAndUpdate will NOT work as intended!
   const token = signToken(user._id);
   // 4) Log user in, send JWT
   res.status(200).json({
@@ -160,6 +154,27 @@ exports.protect = catchAsync(async (req, res, next) => {
   
     // 2) Verification token
     const decoded = await promisify(jwt.verify)(token, process.env.JWT_SECRET);
-
     
-});  
+    
+  // 3) Check if user still exists
+  const currentUser = await Influencer.findById(decoded.id);
+  if (!currentUser) {
+    return next(
+      new AppError(
+        'The user belonging to this token does no longer exist.',
+        401
+      )
+    );
+  }
+
+  // 4) Check if user changed password after the token was issued
+  if (currentUser.changedPasswordAfter(decoded.iat)) {
+    return next(
+      new AppError('User recently changed password! Please log in again.', 401)
+    );
+  }
+
+  // GRANT ACCESS TO PROTECTED ROUTE
+  req.user = currentUser;
+  next();
+});

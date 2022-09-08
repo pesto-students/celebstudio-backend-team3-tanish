@@ -19,6 +19,8 @@ const InfluencerSchema = new mongoose.Schema(
             
         product_category:{ type: Number, default: 0 },
 
+        metrics:{post_share:{type: Number,default: 0}, earning:{type: Number,default: 0},collabs:[]}
+
        
         
         
@@ -45,6 +47,19 @@ InfluencerSchema.methods.correctPassword = async function(
     return await bcrypt.compare(candidatePassword, userPassword);
   };
 
+InfluencerSchema.methods.changedPasswordAfter = function(JWTTimestamp) {
+  if (this.passwordChangedAt) {
+    const changedTimestamp = parseInt(
+      this.passwordChangedAt.getTime() / 1000,
+      10
+    );
+
+    return JWTTimestamp < changedTimestamp;
+  }
+
+  // False means NOT changed
+  return false;
+};
 
 const Influencer = mongoose.model('Influencer', InfluencerSchema);
 module.exports = Influencer;

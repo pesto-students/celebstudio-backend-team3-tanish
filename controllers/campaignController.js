@@ -70,22 +70,23 @@ exports.campaignView = catchAsync(async (req, res, next) => {
     
     const campaign = await Campaign.findById(campaign_id);
     const start_date = campaign.start_date;
-    const start_date_ =(start_date.getDate()+
-          "/"+(start_date.getMonth()+1)+
+    const start_date_ =( (start_date.getMonth()+1)+
+          "/"+start_date.getDate()+
           "/"+start_date.getFullYear()
           )
     
     const current =new Date();
-  console.log(start_date_);
-   const current_date= current.getDate()+
-    "/"+(current.getMonth()+1)+
-    "/"+current.getFullYear();
-    console.log(current_date);
-    console.log(campaign.status);
-     if(start_date_==current_date) { campaign.status = "launched"; }
-   await campaign.save();  
-     const platform = campaign.platform;
-   const influencers = await Campaign.findOne({_id: campaign_id}).populate({path:'influencers.influencer',select:['first_name', `${platform}`]}).select('influencers').exec();
+    console.log(start_date_);
+    const current_date= (current.getDate()+
+                        "/"+(current.getMonth()+1)+
+                        "/"+current.getFullYear());
+    if(start_date_==current_date) { campaign.status = "launched"; }
+    await campaign.save();  
+    const platform = campaign.platform;
+    const influencers = await Campaign.findOne({_id: campaign_id})
+    .populate({path:'influencers.influencer',select:['first_name', `${platform}`]})
+    .select('influencers').exec();
+
     res.status(201).json({
         status:'success',
         data:influencers,
