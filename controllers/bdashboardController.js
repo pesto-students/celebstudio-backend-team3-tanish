@@ -60,10 +60,16 @@ exports.selectInfluencer = catchAsync(async (req, res, next) => {
    const influencerId = req.body.influencer_id;
    const  campaignId = req.params.id;
    const status= req.body.status;
-   const cost = req.body.cost;
+   let cost;
       
    const influencer = await  Influencer.findById(influencerId).select('+password');
 
+   const campaign = await Campaign.findById(campaignId);
+
+   platform = campaign.platform;
+   if (platform == "facebook") cost=influencer.facebook.cost;
+   if (platform == "twitter") cost=influencer.twitter.cost;
+   if(platform=="instagram") cost=influencer.instagram.cost;
    
    const earning = influencer.metrics.earning;
   
