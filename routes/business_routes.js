@@ -7,7 +7,7 @@ const bdashboardController = require("./../controllers/bdashboardController");
 const router = express.Router();
 
 router
-  .route("/")
+  .route("/:id")
   .get(bdashboardController.getProfile)
   .patch(bdashboardController.updateProfile);
 router.get("/:id/campaigns", bdashboardController.getallCampaigns);
