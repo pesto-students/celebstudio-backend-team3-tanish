@@ -1,5 +1,3 @@
-# celebstudio-backend-team3-tanish
-celebstudio-backend-team3-tanish created by GitHub Classroom
 
 
 # CelebStudio
