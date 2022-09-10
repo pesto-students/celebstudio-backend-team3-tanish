@@ -95,35 +95,37 @@ exports.post_link = catchAsync(async (req, res, next) => {
 });
 
 const multerConfig = multer.diskStorage({
-  destination: (req, res, cb) => {
+  destination: (req, file, cb) => {
     cb(null, "public/");
   },
-  filename: (req, res, cb) => {
-    const ext = file.mimeType.split("/")[1];
+  filename: (req, file, cb) => {
+    const ext = file.mimetype.split("/")[1];
     cb(null, `image-${Date.now()}.${ext}`);
   },
 });
-const isImage = (req, res, cb) => {
-  if (file.mimeType.startsWith("image")) {
-    cb(null, true);
-  } else {
-    cb(new Error("Only images are allowed"));
-  }
-};
+// const isImage = (req, file, cb) => {
+//   if (file.mimeType.startsWith("image")) {
+//     cb(null, true);
+//   } else {
+//     cb(new Error("Only images are allowed"));
+//   }
+// };
 const upload = multer({
   dest: "public/",
-  fileFilter: isImage,
+  storage: multerConfig,
+
+  //fileFilter: isImage,
 });
 
 exports.uploadImage = upload.single("photo");
 
 exports.upload = catchAsync(async (req, res, next) => {
-  const data = req.file.filename;
-  const contentType = "image/png";
+  const data = req.file;
+  console.log(data);
   const filter = { _id: req.params.id };
   let doc = await Influencer.findOneAndUpdate(
     filter,
-    { "img.data": data, "img.contentType": contentType },
+    { img: req.file.path },
     {
       new: true,
     }

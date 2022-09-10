@@ -11,7 +11,7 @@ const InfluencerSchema = new mongoose.Schema(
     active: { type: Boolean, required: true, default: true },
     phone: { type: String, required: false },
     Date_of_Birth: { type: Date, default: Date.now },
-    img: { data: Buffer, contentType: String },
+    img: { type: String, required: false },
 
     facebook: {
       isactive: { type: Boolean, default: false },
