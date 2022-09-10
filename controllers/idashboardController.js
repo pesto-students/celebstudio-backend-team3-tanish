@@ -79,7 +79,9 @@ exports.post_link = catchAsync(async (req, res, next) => {
   influencerId = req.params.id;
   campaignId = req.body.campaign_id;
   post_link = req.body.post_link;
-  const influencer = await Influencer.findById(influencerId);
+  const influencer = await Influencer.findById(influencerId).select(
+    "+password"
+  );
   const post_share = influencer.metrics.post_share;
   influencer.metrics.post_share = cost + post_share;
   await influencer.save();
