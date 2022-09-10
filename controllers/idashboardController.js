@@ -47,7 +47,7 @@ exports.campaigns = catchAsync(async (req, res, next) => {
 
   collabs = uniquebs.length;
   const post_share = influencer.metrics.post_share;
-  const earnings = influencer.metrics.earnings;
+  const earnings = influencer.metrics.earning;
 
   const accept = "accept";
   const campaigns = await Campaign.find(
@@ -83,7 +83,7 @@ exports.post_link = catchAsync(async (req, res, next) => {
     "+password"
   );
   const post_share = influencer.metrics.post_share;
-  influencer.metrics.post_share = cost + post_share;
+  influencer.metrics.post_share = 1 + post_share;
   await influencer.save();
   const filter = { _id: campaignId, "influencers.influencer": influencerId };
   const update = { "influencers.$.post_link": post_link };
