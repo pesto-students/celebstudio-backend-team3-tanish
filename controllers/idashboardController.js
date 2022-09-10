@@ -117,7 +117,7 @@ const upload = multer({
   //fileFilter: isImage,
 });
 
-exports.uploadImage = upload.single("photo");
+exports.uploadImage = upload.single("profileImage");
 
 exports.upload = catchAsync(async (req, res, next) => {
   const data = req.file;
