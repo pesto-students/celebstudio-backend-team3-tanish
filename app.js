@@ -1,5 +1,5 @@
 const express = require("express");
-
+const globalErrorHandler = require("./controllers/errorController");
 const bodyParser = require("body-parser");
 const userRouter = require("./routes/routes");
 const businessRouter = require("./routes/business_routes");
@@ -31,4 +31,5 @@ app.get("/", (request, response) => {
     .status(200)
     .json({ message: "Hello from the server side", app: "celebstudio" });
 });
+app.use(globalErrorHandler);
 module.exports = app;
