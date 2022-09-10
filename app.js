@@ -1,4 +1,6 @@
 const express = require("express");
+
+const globalErrorHandler = require("./controllers/errorController");
 const bodyParser = require("body-parser");
 const userRouter = require("./routes/routes");
 const businessRouter = require("./routes/business_routes");
@@ -10,11 +12,14 @@ const CORS = require("cors");
 const app = express();
 
 app.use(CORS());
+////
+app.use(express.static("public"));
+//////
 
-app.use("/public", express.static("public"));
+///app.use("/public", express.static("public"));
 // Body parser, reading data from body into req.body
-app.use(express.json({ limit: "10kb" }));
-app.use(express.urlencoded({ extended: true, limit: "10kb" }));
+app.use(express.json({ limit: "50mb" }));
+app.use(express.urlencoded({ extended: true, limit: "50mb" }));
 //app.use(cookieParser());
 
 app.use("/api/v1", userRouter);
@@ -27,5 +32,6 @@ app.get("/", (request, response) => {
     .status(200)
     .json({ message: "Hello from the server side", app: "celebstudio" });
 });
+app.use(globalErrorHandler);
 
 module.exports = app;
