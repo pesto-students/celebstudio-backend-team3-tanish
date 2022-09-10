@@ -4,6 +4,7 @@ const Influencer = require("./../models/influencer_model");
 const multer = require("multer");
 const mongoose = require("mongoose");
 const AppError = require("./../utils/appError");
+//const { cloudinary } = require("./../utils/cloudinary");
 
 exports.getProfile = catchAsync(async (req, res, next) => {
   influencerId = req.params.id;
@@ -120,25 +121,34 @@ const upload = multer({
 
 exports.uploadImage = upload.single("profileImage");
 
-exports.upload = catchAsync(async (req, res, next) => {
-  const data = req.file;
-  console.log(data);
-  const filter = { _id: req.params.id };
-  let doc = await Influencer.findOneAndUpdate(
-    filter,
-    { img: req.file.path },
-    {
-      new: true,
-    }
-  );
-  res.status(201).json({
-    status: "success",
-    data: {
-      message: "successfully uploaded image",
-      profile: doc,
-    },
-  });
-});
+// exports.upload = catchAsync(async (req, res, next) => {
+//   const data = req.file;
+//   console.log(data);
+//   const filter = { _id: req.params.id };
+//   let doc = await Influencer.findOneAndUpdate(
+//     filter,
+//     { img: req.file.path },
+//     {
+//       new: true,
+//     }
+//   );
+//   res.status(201).json({
+//     status: "success",
+//     data: {
+//       message: "successfully uploaded image",
+//       profile: doc,
+//     },
+//   });
+// });
+
+// exports.cloudImage = catchAsync(async (req, res, next) => {
+//   const fileStr = req.body.data;
+//   const uploadResponse = await cloudinary.uploader.upload(fileStr, {
+//     upload_preset: "dev_setups",
+//   });
+//   console.log(uploadResponse);
+//   res.json({ msg: "yaya" });
+// });
 
 exports.applyforCampaign = catchAsync(async (req, res, next) => {
   campaignId = req.params.id;
