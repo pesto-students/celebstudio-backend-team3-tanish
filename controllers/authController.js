@@ -4,6 +4,7 @@ const catchAsync = require("./../utils/catchAsync");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
 const Campaign = require("../models/campaign_model");
+const AppError = require("./../utils/appError");
 
 const signToken = (id) => {
   return jwt.sign({ id }, process.env.JWT_SECRET, {
@@ -115,7 +116,6 @@ exports.updatePasswordBusiness = catchAsync(async (req, res, next) => {
   user.password = req.body.password;
   user.passwordConfirm = req.body.passwordConfirm;
   await user.save();
-  // User.findByIdAndUpdate will NOT work as intended!
   const token = signToken(user._id);
   // 4) Log user in, send JWT
   res.status(200).json({

@@ -3,6 +3,7 @@ const Campaign = require("./../models/campaign_model");
 const Business = require("./../models/business_model");
 const Influencer = require("./../models/influencer_model");
 const catchAsync = require("./../utils/catchAsync");
+const AppError = require("./../utils/appError");
 
 // get all campaigns created by the business
 exports.getallCampaigns = catchAsync(async (req, res, next) => {

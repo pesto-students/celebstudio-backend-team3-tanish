@@ -3,6 +3,7 @@ const catchAsync = require("./../utils/catchAsync");
 const Influencer = require("./../models/influencer_model");
 const multer = require("multer");
 const mongoose = require("mongoose");
+const AppError = require("./../utils/appError");
 
 exports.getProfile = catchAsync(async (req, res, next) => {
   influencerId = req.params.id;
