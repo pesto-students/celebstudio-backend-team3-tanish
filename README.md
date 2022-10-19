@@ -5,6 +5,11 @@
 CelebStudio provides  a  platform  for  connecting  brands  with  social  media  influencers and  micro-influencers
 so  they  may  promote  products  and  raise  brand  recognition and sales.
 ## Table of Contents
+1. [Demo](#demo)
+2. [Installation](#installation)
+3. [Technology Stack](#tech-stack)
+4. [Authors](#authors)
+5. [License](#license)
 
 ## Demo
 
