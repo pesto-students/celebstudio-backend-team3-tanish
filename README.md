@@ -12,7 +12,16 @@ so  they  may  promote  products  and  raise  brand  recognition and sales.
 5. [License](#license)
 
 ## Demo
+[Live Demo](https://celebstudio.netlify.app/)
 
+<br/>
+
+Please Note:
+
+1. We recommend using this app in Google Chrome
+2. Use the app on Laptop/desktop only as of now.
+
+<br/>
 ## Installation
 - Clone the repo
 `https://github.com/pesto-students/celebstudio-backend-team3-tanish.git`
@@ -26,6 +35,7 @@ so  they  may  promote  products  and  raise  brand  recognition and sales.
 - Authentication- via JWT 
 - Tools- Version Control System (GIT), Github, Cloudinary.
 ## Authors:
-- Himasree M
-- Jitender R
+- [Himasree M](https://github.com/mhimasree11)
+- [Jitendra Prasad](https://github.com/jitkush)
 ## License
+[MIT](https://opensource.org/licenses/MIT)
