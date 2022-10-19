@@ -22,7 +22,8 @@ Please Note:
 2. Use the app on Laptop/desktop only as of now.
 
 <br/>
-## Installation
+
+##  Installation
 - Clone the repo
 `https://github.com/pesto-students/celebstudio-backend-team3-tanish.git`
 - Install NPM packages `npm install`
