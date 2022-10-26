@@ -1,21 +1,43 @@
-# Pesto Assignments
-
-Welcome to Pesto assignments.
 
 
-## How to solve assignments
+# CelebStudio
+## What is it?
+CelebStudio provides  a  platform  for  connecting  brands  with  social  media  influencers and  micro-influencers
+so  they  may  promote  products  and  raise  brand  recognition and sales.
+CelebStudio is a discovery medium for businesses and brands looking for marketing channels. It also provides opportunity and access for social media influencers to collaborate with their favourite brands to enagage better with their audiences.
+## Table of Contents
+1. [Demo](#demo)
+2. [Installation](#installation)
+3. [Technology Stack](#tech-stack)
+4. [Authors](#authors)
+5. [License](#license)
 
-Weekly Assignments will be shared by your mentor or instructor.
+## Demo
+[Live Demo](https://celebstudio.netlify.app/)
 
-Make sure master or main branch is protected and you are not able to push any code directly to master.
+<br/>
 
-- Clone this repo to your local.
-- Checkout to new branch for submission. Suggestion you can name new branch week wise - branch for week 1 assignment can be week1
-```bash
-git checkout -b week1
-```
-- Create Assignment week folder in root directory(if it doesn't exist) for eg. for solving week 1 assignment create folder with name "week1".
-- You can create subfolders in main week(week1) folder if required.
-- Add proper readme [(How to Write proper readme](https://meakaakka.medium.com/a-beginners-guide-to-writing-a-kickass-readme-7ac01da88ab3) )in week's folder or subfolder explaining about assignment, how to run assignment and any other instructions. 
-- Raise a PR against master and add your mentor as reviewer
-- Resolve PR comments if any and once your mentor approves your PR, Merge it.
+Please Note:
+
+1. We recommend using this app in Google Chrome
+2. Use the app on Laptop/desktop only as of now.
+
+<br/>
+
+##  Installation
+- Clone the repo
+`https://github.com/pesto-students/celebstudio-backend-team3-tanish.git`
+- Install NPM packages `npm install`
+- Run `npm start`
+
+## Tech stack
+- Backend- NodeJS, Express
+- Deployment- Heroku, CI/CD.
+- Database- Mongo DB
+- Authentication- via JWT 
+- Tools- Version Control System (GIT), Github, Cloudinary.
+## Authors:
+- [Himasree M](https://github.com/mhimasree11)
+- [Jitendra Prasad](https://github.com/jitkush)
+## License
+[MIT](https://opensource.org/licenses/MIT)
