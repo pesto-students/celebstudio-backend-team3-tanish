@@ -56,10 +56,7 @@ exports.selectInfluencer = catchAsync(async (req, res, next) => {
   const status = req.body.status;
   let cost;
 
-  const influencer = await Influencer.findById(influencerId).select(
-    "+password"
-  );
-
+  const influencer = await Influencer.findById(influencerId);
   const campaign = await Campaign.findById(campaignId);
 
   platform = campaign.platform;
@@ -69,15 +66,21 @@ exports.selectInfluencer = catchAsync(async (req, res, next) => {
 
   const earning = influencer.metrics.earning;
 
-  influencer.metrics.earning = parseInt(cost) + earning;
+  influencerEarning = parseInt(cost) + earning;
 
   const collabs = influencer.metrics.collabs;
 
   collabs.push(String(campaignId));
-
-  influencer.metrics.collabs = collabs;
-
-  await influencer.save();
+  const filter1 = {
+    _id: influencerId,
+  };
+  const update1 = {
+    "influencer.metrics.earning": influencerEarning,
+    "influencer.metrics.collabs": collabs,
+  };
+  await Influencer.findOneAndUpdate(filter1, update1, {
+    new: true,
+  });
 
   const filter = { _id: campaignId, "influencers.influencer": influencerId };
   const update = { "influencers.$.status": status, "influencers.$.cost": cost };
